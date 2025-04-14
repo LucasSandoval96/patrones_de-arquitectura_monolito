@@ -3,6 +3,7 @@ const { engine } = require("express-handlebars");
 const path = require("path");
 const { createTables } = require("./db/initializeDatabase"); // Importar la función de inicialización
 
+
 const app = express();
 const PORT = process.env.PORT || 8000;
 
@@ -23,6 +24,10 @@ app.get("/", (req, res) => {
 
 const productosRouter = require("./routes/products");
 app.use("/products", productosRouter);
+
+const usuariosRouter = require("./routes/usuarios");
+app.use("/usuarios", usuariosRouter);
+
 
 app.listen(PORT, () => {
   console.log(`Servidor corriendo en http://localhost:${PORT}`);
