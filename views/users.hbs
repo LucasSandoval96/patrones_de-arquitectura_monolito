@@ -1,0 +1,25 @@
+{{!< layouts/mainLayout }}
+
+<div class="d-flex justify-content-center align-items-center flex-column" style="height: 100vh;">
+    
+<h1>Lista de Usuarios</h1>
+
+<form action="/users/add" method="POST">
+    <input class="form-control" type="text" name="name" placeholder="Nombre" required>
+    <input class="form-control mt-4" type="email" name="email" placeholder="Correo Electrónico" required>
+    <button type="submit" class="btn btn-primary mt-4">Agregar</button>
+</form>
+
+<div class="d-flex flex-column gap-3">
+    {{#each users}}        
+        <div class="d-flex gap-3 align-items-center">
+            * {{name}} - {{email}}
+            <form action="/users/delete/{{id}}" method="POST" class="d-flex" style="margin: 0px !important;">
+                <button type="submit" class="btn btn-secondary">Eliminar</button>
+            </form>
+        </div>
+    {{/each}}
+</div>
+
+<a href="/">Volver</a>
+</div>

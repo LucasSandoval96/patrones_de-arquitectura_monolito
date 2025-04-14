@@ -1,8 +1,9 @@
+const path = require("path");
 const db = require("./database").getDb();
 
 function createTables() {
   db.serialize(() => {
-    // Tabla de productos
+    // Tabla products
     db.run(
       `
       CREATE TABLE IF NOT EXISTS products (
@@ -10,25 +11,25 @@ function createTables() {
         name TEXT NOT NULL,
         price REAL NOT NULL
       )
-      `,
+    `,
       (err) => {
         if (err) {
-          console.error("Error al crear la tabla products:", err.message);
+          console.error("Error al crear la tabla productos:", err.message);
         } else {
-          console.log("Tabla products creada o ya existe.");
+          console.log("Tabla productos creada o ya existe.");
         }
       }
     );
 
-    // Tabla de usuarios
+    // Tabla users
     db.run(
       `
       CREATE TABLE IF NOT EXISTS users (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
-        nombre TEXT NOT NULL,
-        dni TEXT NOT NULL UNIQUE
+        name TEXT NOT NULL,
+        email TEXT NOT NULL
       )
-      `,
+    `,
       (err) => {
         if (err) {
           console.error("Error al crear la tabla users:", err.message);
@@ -37,29 +38,8 @@ function createTables() {
         }
       }
     );
-
-    // Tabla de ventas
-    db.run(
-      `
-      CREATE TABLE IF NOT EXISTS ventas (
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-        producto_id INTEGER,
-        usuario_id INTEGER,
-        cantidad INTEGER,
-        fecha TEXT,
-        FOREIGN KEY (producto_id) REFERENCES products(id),
-        FOREIGN KEY (usuario_id) REFERENCES users(id)
-      )
-      `,
-      (err) => {
-        if (err) {
-          console.error("Error al crear la tabla ventas:", err.message);
-        } else {
-          console.log("Tabla ventas creada o ya existe.");
-        }
-      }
-    );
   });
 }
 
 module.exports = { createTables };
+

@@ -1,7 +1,6 @@
 const db = require("../db/database").getDb();
 
-class UsuarioModel {
-  // Obtener todos los usuarios
+class UserModel {
   getAll() {
     return new Promise((resolve, reject) => {
       db.all("SELECT * FROM users", [], (err, rows) => {
@@ -14,24 +13,38 @@ class UsuarioModel {
     });
   }
 
-  // Agregar un usuario
-  createUser({ nombre, dni }) {
+  // createUser({ name, email }) {
+  //   return new Promise((resolve, reject) => {
+  //     db.run(
+  //       "INSERT INTO users (name, email) VALUES (?, ?)",
+  //       [name, email],
+  //       function (err) {
+  //         if (err) {
+  //           reject("Error al agregar usuario: " + err.message);
+  //         } else {
+  //           resolve({ id: this.lastID, name, email });
+  //         }
+  //       }
+  //     );
+  //   });
+  // }
+  createUser({ name, email }) {
     return new Promise((resolve, reject) => {
       db.run(
-        "INSERT INTO users (nombre, dni) VALUES (?, ?)",
-        [nombre, dni],
+        "INSERT INTO users (name, email) VALUES (?, ?)",
+        [name, email],
         function (err) {
           if (err) {
             reject("Error al agregar usuario: " + err.message);
           } else {
-            resolve({ id: this.lastID, nombre, dni });
+            resolve({ id: this.lastID, name, email });
           }
         }
       );
     });
   }
+  
 
-  // Eliminar un usuario por ID
   deleteUser(id) {
     return new Promise((resolve, reject) => {
       db.run("DELETE FROM users WHERE id = ?", [id], (err) => {
@@ -45,4 +58,4 @@ class UsuarioModel {
   }
 }
 
-module.exports = UsuarioModel;
+module.exports = UserModel;
